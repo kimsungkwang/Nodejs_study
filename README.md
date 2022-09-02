@@ -1,3 +1,3 @@
 # Nodejs_study
 
-node 공부중. 
+nodeJS 공부중....
