@@ -7,7 +7,7 @@ const server = http
     try {
       res.writeHead(200, { "Content-type": "text/html; charset=utf-8" });
       // 파일 읽기
-      const data = await fs.readFile("server2.html");
+      const data = await fs.readFile("http_server/server2.html");
       // 파일 전송
       res.end(data);
     } catch (error) {
