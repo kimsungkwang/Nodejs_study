@@ -13,7 +13,12 @@ app.use(
     next();
   },
   (req, res, next) => {
-    throw new Error("에러가 났어요 ㅠㅠ");
+    try {
+      console.log(adfdfsff);
+    } catch (error) {
+      console.log("error 발생 !!!!!! ");
+      next(error);
+    }
   }
 );
 app.get("/", (req, res, next) => {
