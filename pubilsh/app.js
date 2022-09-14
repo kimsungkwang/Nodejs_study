@@ -1,26 +1,32 @@
 const express = require("express");
 const path = require("path");
-
+const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const multer = require("multer");
 const app = express();
 
 // 앱 설정
 app.set("port", process.env.PORT || 3000);
 
-// 공통 미들웨어 설정
+app.use(morgan("dev"));
+app.use("/", express.static(__dirname, "public"));
+app.use(cookieParser("sungoang_password"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(
-  (req, res, next) => {
-    console.log("요청에 실행 하고 싶어요 1");
-    next();
-  },
-  (req, res, next) => {
-    try {
-      console.log(adfdfsff);
-    } catch (error) {
-      console.log("error 발생 !!!!!! ");
-      next(error);
-    }
-  }
+  session({
+    resave: false,
+    saveUninitialized: false,
+    secret: "sungoang_password",
+    cookie: {
+      httpOnly: true,
+    },
+    name: "connect.sid",
+  })
 );
+app.use(multer().array());
+
 app.get("/", (req, res, next) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
