@@ -1,3 +1,7 @@
+// dotenv 는 최대한 위로 
+const dotenv = require("dotenv");
+dotenv.config();
+
 const express = require("express");
 const path = require("path");
 const morgan = require("morgan");
@@ -11,14 +15,14 @@ app.set("port", process.env.PORT || 3000);
 
 app.use(morgan("dev"));
 app.use("/", express.static(__dirname, "public"));
-app.use(cookieParser("sungoang_password"));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     resave: false,
     saveUninitialized: false,
-    secret: "sungoang_password",
+    secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
     },
